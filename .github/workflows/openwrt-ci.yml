@@ -14,9 +14,9 @@ on:
     - cron: 0 20 * * *
   release:
     types: [published]
-  # push:
-  #   branches: 
-  #     - master
+  push:
+    branches: 
+      - master
 
 jobs:
 
@@ -62,8 +62,17 @@ jobs:
       - name: Generate configuration file
         run: |
           cp ./makeconfig.d/x86_64.config ./.config
-          make defconfig
-
+          
+          # 常用LuCI插件选择:
+          cat >> .config <<EOF
+          CONFIG_PACKAGE_luci-app-mwan=y
+          CONFIG_PACKAGE_luci-app-syncdial=y
+          CONFIG_PACKAGE_luci-app-tinyproxy=y
+          EOF
+          
+          sed -i 's/^[ \t]*//g' ./.config
+          make defconfig        
+          
       - name: Make download
         run: |
           make download -j8
