@@ -60,10 +60,9 @@ jobs:
           cp ./makeconfig.d/x86_64.config ./.config
           
           # 常用LuCI插件选择:
-          cat >> .config <<EOF
-          CONFIG_PACKAGE_luci-app-mwan=y
+          cat >> .config << EOF
+          CONFIG_PACKAGE_luci-app-mwan3helper=y
           CONFIG_PACKAGE_luci-app-syncdial=y
-          CONFIG_PACKAGE_luci-app-tinyproxy=y
           EOF
           
           sed -i 's/^[ \t]*//g' ./.config
